@@ -89,3 +89,62 @@ props = sapply(qs, function(q) mean(x <= q))
 
 
 
+#######################################
+m <- vector("numeric", 1000)
+set.seed(1)
+for (i in 1:1000){
+  samp <- sample(femaleControlsPopulation$Bodyweight, 5)
+  m[i] <- mean(samp)
+}
+
+n <- vector("numeric", 1000)
+set.seed(1)
+for (i in 1:1000){
+  samp <- sample(femaleControlsPopulation$Bodyweight, 50)
+  n[i] <- mean(samp)
+}
+hist(m)
+hist(n)
+
+library(downloader) 
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/mice_pheno.csv"
+filename <- basename(url)
+download(url, destfile=filename)
+dat <- read.csv(filename) 
+
+dat <- na.omit( dat )
+male <- dat[dat$Sex == "M",]
+mcon <- male[male$Diet =="chow",]
+mean(mcon$Bodyweight)
+sd(mcon$Bodyweight)
+x <- mcon$Bodyweight
+set.seed(1)
+mean(sample(x,25))
+
+mhf <- male[male$Diet == "hf",]
+y <- mhf$Bodyweight
+mean(y)
+sd(mhf$Bodyweight)
+set.seed(1)
+mean(sample(y,25))
+
+(mean(y)-mean(mcon$Bodyweight))+(32.0956-34.768)
+
+
+female <- dat[dat$Sex == "F",]
+fcon <- female[female$Diet =="chow",]
+mean(fcon$Bodyweight)
+sd(fcon$Bodyweight)
+s <- fcon$Bodyweight
+set.seed(1)
+mean(sample(s,25))
+
+fhf <- female[female$Diet == "hf",]
+t <- fhf$Bodyweight
+mean(t)
+sd(fhf$Bodyweight)
+set.seed(1)
+mean(sample(t,25))
+
+(mean(t)-mean(fcon$Bodyweight)) +  (23.1692-26.2812)
+
