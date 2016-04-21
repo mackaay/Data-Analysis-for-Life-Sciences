@@ -1,0 +1,91 @@
+#week 1
+library(downloader) 
+url <- "https://raw.githubusercontent.com/genomicsclass/dagdata/master/inst/extdata/femaleMiceWeights.csv"
+filename <- "femaleMiceWeights.csv" 
+download(url, destfile=filename)
+
+femaleMiceWeights[12,2]
+eleven <- femaleMiceWeights$Bodyweight[11]
+eleven
+length(femaleMiceWeights$Bodyweight)
+mean(femaleMiceWeights$Bodyweight[13:24])
+
+set.seed(1)
+sample(13:24,1)
+
+install.packages("dplyr")
+library(dplyr)
+aa <- msleep[msleep$order == 'Primates',]
+nrow(aa)
+bb <- aa$sleep_total 
+class(bb)
+?select
+mean(bb)
+
+?summarize
+summary(bb)
+#######################################################################################
+
+#week 2
+mean(femaleControlsPopulation$Bodyweight)
+
+set.seed(1)
+mean(sample(femaleControlsPopulation$Bodyweight, 5))-mean(femaleControlsPopulation$Bodyweight)
+
+set.seed(5)
+mean(sample(femaleControlsPopulation$Bodyweight, 5))-mean(femaleControlsPopulation$Bodyweight)
+
+x <- mean(femaleControlsPopulation$Bodyweight)
+m <- vector("numeric", 1000)
+set.seed(1)
+for (i in 1:1000){
+  samp <- sample(femaleControlsPopulation$Bodyweight, 5)
+  m[i] <- mean(samp)
+}
+largerthanone <- abs(b <- m - x ) >1
+sum(largerthanone)
+
+x <- mean(femaleControlsPopulation$Bodyweight)
+m <- vector("numeric", 10000)
+set.seed(1)
+for (i in 1:10000){
+  samp <- sample(femaleControlsPopulation$Bodyweight, 5)
+  m[i] <- mean(samp)
+}
+largerthanone <- abs(b <- m - x ) >1
+sum(largerthanone)
+
+x <- mean(femaleControlsPopulation$Bodyweight)
+m <- vector("numeric", 1000)
+set.seed(1)
+for (i in 1:1000){
+  samp <- sample(femaleControlsPopulation$Bodyweight, 50)
+  m[i] <- mean(samp)
+}
+largerthanone <- abs(b <- m - x ) >1
+sum(largerthanone)
+
+install.packages("gapminder")
+library(gapminder)
+data(gapminder)
+head(gapminder)
+x <- gapminder$lifeExp[gapminder$year == "1952"]
+head(x)
+hist(x)
+sum(xx <- x<= 40)
+
+#SAPPLY() ON A CUSTOM FUNCTION
+#Suppose we want to plot the proportions of countries with life expectancy 'q' for a range of different years.
+prop <- function(q) {
+  mean(x <= q)
+}
+prop(40)
+#Print 'qs' to the R console to see what the seq() function gave us. Now we can use sapply() to apply the 'prop' function to each element of 'qs'
+qs = seq(from=min(x), to=max(x), length=20)
+props = sapply(qs, prop)
+plot(qs, props)
+#write in one line
+props = sapply(qs, function(q) mean(x <= q))
+
+
+
